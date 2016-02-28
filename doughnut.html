@@ -7,61 +7,112 @@
 			body{
 				padding: 0;
 				margin: 0;
-			}
-			#canvas-holder{
-				width:30%;
-			}
-		</style>
+         }
+         #w {
+            position: relative;
+            height: 400px;
+            width: 400px;
+         }
+         
+         #d1, #d2 {
+            position: absolute;
+         }
+         
+         #d1 {
+            top: 0px;
+            left: 0px;
+         }
+         
+         #d2 {
+            border-radius: 150px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+         }
+      </style>
 	</head>
 	<body>
-		<div id="canvas-holder">
-			<canvas id="chart-area" width="500" height="500"/>
-		</div>
+      
+   <div id="w">   
+      <canvas id="d1" height="400" width="400"></canvas>
+      <canvas id="d2" height="200" width="200"></canvas>
+   </div>
 
+   <script>
+      
+      var doughnutData = [
+         {
+            value: 20,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red",
+         },
+         {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+         },
+         {
+            value: 30,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+         },
+         {
+            value: 40,
+            color: "#949FB1",
+            highlight: "#A8B3C5",
+            label: "Grey"
+         },
+         {
+            value:120,
+            color:"#4D5360",
+            highlight:"#616774",
+            label:"Dark Grey"
+         } 
+      ];
+      
+      var doughnutData2 = [
+         {
+            value:10,
+            color:"#F7464A",
+            highlight:"#FF5A5E",
+            label:"Red",
+         },
+         {
+            value:100,
+            color:"#46BFBD",
+            highlight:"#5AD3D1",
+            label:"Green"
+         },
+         {
+            value:20,
+            color:"#FDB45C",
+            highlight:"#FFC870",
+            label:"Yellow"
+         },
+         {
+            value:60,
+            color:"#949FB1",
+            highlight:"#A8B3C5",
+            label:"Grey"
+         },
+         {
+            value:120,
+            color:"#4D5360",
+            highlight:"#616774",
+            label:"Dark Grey"
+         } 
+      ];
 
-	<script>
+      
+      var ctx1 = document.getElementById("d1").getContext("2d");
+      var myChart1 = new Chart(ctx1).Doughnut(doughnutData,{percentageInnerCutout:50});
+      
+      var ctx2 = document.getElementById("d2").getContext("2d");
+      var myChart2 = new Chart(ctx2).Doughnut(doughnutData2,{percentageInnerCutout:50});
 
-		var doughnutData = [
-				{
-					value: 300,
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "Red"
-				},
-				{
-					value: 50,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "Green"
-				},
-				{
-					value: 100,
-					color: "#FDB45C",
-					highlight: "#FFC870",
-					label: "Yellow"
-				},
-				{
-					value: 40,
-					color: "#949FB1",
-					highlight: "#A8B3C5",
-					label: "Grey"
-				},
-				{
-					value: 120,
-					color: "#4D5360",
-					highlight: "#616774",
-					label: "Dark Grey"
-				}
-
-			];
-
-			window.onload = function(){
-				var ctx = document.getElementById("chart-area").getContext("2d");
-				window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
-			};
-
-
-
-	</script>
-	</body>
+   </script>
+   </body>
 </html>
