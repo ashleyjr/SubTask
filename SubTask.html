@@ -288,67 +288,109 @@
          
          }
          
+
          function init_plots(val)
          {
-             
-             function count_function(d)
-             {
-                 return d[1][0];
-             }
-             
-             function label_function(d)
-             {
-                 return d[2]+": "+d[4][0]+" characters, "+d[4][1]+" lines of code.";
-             }
-             
-             function legend_function(d)
-             {
-                 return "<h2>"+d[2]+"&nbsp;</h2><p>"+d[4][0]+" characters, "+d[4][1]+" lines of code.</p>"
-             }
-             
-             var color = d3.scale.category20c();
          
-             function color_function(d)
-             {
-                 return color(d[2]);
-             }
-             d3.select(self.frameElement).style("height", "800px");
-             //if(val == 1){
-               init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data,count_function,color_function,label_function,legend_function);
-            //}else{
-              //  init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data_two,count_function,color_function,label_function,legend_function);
-              // }
+         function count_function(d)
+         {
+         return d[1][0];
          }
          
-         window.onload = init_plots(1);
-         window.onresize = init_plots(1);
+         function label_function(d)
+         {
+         return d[2]+": "+d[4][0]+" characters, "+d[4][1]+" lines of code.";
+         }
+         
+         function legend_function(d)
+         {
+         return "<h2>"+d[2]+"&nbsp;</h2><p>"+d[4][0]+" characters, "+d[4][1]+" lines of code.</p>"
+         }
+         
+         var color = d3.scale.category20c();
+         
+         function color_function(d)
+         {
+         return color(d[2]);
+         }
+         d3.select(self.frameElement).style("height", "800px");
+         if(val){
+            init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data,count_function,color_function,label_function,legend_function);
+            }else{
+            init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data_1,count_function,color_function,label_function,legend_function);
 
-
+            }
+         }
+        
+          
          code_hierarchy_data = [
-            "",
-            [10,10],
-            {  
-               "1": ["1",[8,8],{
-                  "a": ["a",[6,6],{
-                     "1": ["1",[4,4],{
-                        "a": ["a",[2,2],{
-                           "1": ["1",[1,1],{}], 
-                           "2": ["2",[1,1],{}], 
-                        }], 
-                        "b": ["b",[1,1],{}],
-                        "c": ["c",[1,1],{}],
-                     }],
-                     "2": ["2",[1,1],{}],
-                     "3": ["3",[1,1],{}],
-                  }],
-                  "b": ["b",[1,1],{}],
-                  "C": ["C",[1,1],{}],
-                  }],
-               "2": ["2",[1,1],{}],
-               "3": ["3",[1,1],{}],
-               }
+         "",
+         [10,10],
+         {  
+         "1": ["1",[8,8],{
+         "a": ["a",[6,6],{
+         "1": ["1",[4,4],{
+         "a": ["a",[2,2],{
+         "1": ["1",[1,1],{}], 
+         "2":
+         ["2",[1,1],{}], 
+         }], 
+         "b":
+         ["b",[1,1],{}],
+         "c":
+         ["c",[1,1],{}],
+         }],
+         "2":
+         ["2",[1,1],{}],
+         "3":
+         ["3",[1,1],{}],
+         }],
+         "b":
+         ["b",[1,1],{}],
+         "C":
+         ["C",[1,1],{}],
+         }],
+         "2":
+         ["2",[1,1],{}],
+         "3":
+         ["3",[1,1],{}],
+         }
          ];
-      
+
+
+
+         code_hierarchy_data_1 = [
+         "",
+         [10,10],
+         {  
+         "1": ["1",[8,8],{
+         "a": ["a",[6,6],{
+         "1": ["1",[4,4],{
+         "a": ["a",[2,2],{
+         "1": ["1",[2,2],{}],  
+         }], 
+         "b":
+         ["b",[1,1],{}],
+         "c":
+         ["c",[1,1],{}],
+         }],
+         "2":
+         ["2",[1,1],{}],
+         "3":
+         ["3",[1,1],{}],
+         }],
+         "b":
+         ["b",[1,1],{}],
+         "C":
+         ["C",[1,1],{}],
+         }],
+         "2":
+         ["2",[1,1],{}],
+         "3":
+         ["3",[1,1],{}],
+         }
+         ];
+            
       </script>
    </head>
    <body>   
@@ -358,7 +400,9 @@
          </div>
          <div id="input">
             <input type="text" size="25" value="Enter your name here!">
+            <input type="submit" value="Submit" onclick="init_plots(1)"><br>
             <input type="submit" value="Submit" onclick="init_plots(0)"><br>
+
          </div>
          <div id="code_hierarchy_legend">&nbsp;</div>
          <div id="code_hierarchy">&nbsp;</div>
