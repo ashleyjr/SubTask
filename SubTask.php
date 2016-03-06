@@ -34,7 +34,7 @@
          position:absolute;
          width:40%;
          top:8%;
-         left:2%;
+         left:20%;
          font-size:1.4em;
       }
       
@@ -66,29 +66,29 @@
 <?php
 
 if( isset($_GET['id'])){
-   $filename = $_GET['id'].'.xml';
+   $id = $_GET['id'];
+   $filename = $id.'.xml';
    if(!file_exists($filename)){ 
       $file = fopen($filename,"wb");
-      $entry ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<".$_GET['id'].">\n</".$_GET['id'].">";
+      $entry ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<".$id.">\n</".$id.">";
       fwrite($file,$entry);
       fclose($file);
    }
    $xml = file_get_contents($filename);     
    echo $xml;
-   echo '
-      <div>
-         <div id="title">
-            <h1>SubTask</h1>
-            </div>
-            <div id="input">
-               <input type="text" size="25" value="Enter your name here!">
-               <input type="submit" value="Submit" onclick="init_plots(1)"><br>
-               <input type="submit" value="Submit" onclick="init_plots(0)"><br>
-            </div>
-            <div id="code_hierarchy_legend">&nbsp;</div>
-            <div id="code_hierarchy">&nbsp;</div>
-      </div>
-   ';
+   echo '<div>';
+   echo '   <div id="title">';
+   echo '      <h1>SubTask</h1>';
+   echo '      <h2>'.$id.'</h2>';
+   echo '   </div>';
+   echo '   <div id="input">';
+   echo '      <input type="text" size="25" value="Enter your name here!">';
+   echo '      <input type="submit" value="Submit" onclick="init_plots(1)"><br>';
+   echo '      <input type="submit" value="Submit" onclick="init_plots(0)"><br>';
+   echo '   </div>';
+   echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
+   echo '      <div id="code_hierarchy">&nbsp;</div>';
+   echo '</div>';
 } 
 ?> 
    </body>
