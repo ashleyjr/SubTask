@@ -65,7 +65,7 @@
 
 <?php
 
-if( isset($_GET['id'])){
+if(isset($_GET['id'])){
    $id = $_GET['id'];
    $filename = $id.'.xml';
    if(!file_exists($filename)){ 
@@ -75,7 +75,10 @@ if( isset($_GET['id'])){
       fclose($file);
    }
    $xml = file_get_contents($filename);     
-   echo $xml;
+   $p = xml_parser_create();
+   xml_parse_into_struct($p, $xml, $vals, $index);
+   xml_parser_free($p);
+   print_r($vals);
    echo '<div>';
    echo '   <div id="title">';
    echo '      <h1>SubTask</h1>';

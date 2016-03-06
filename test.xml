@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+   <task>
+      <name>Break eggs</name>
+      <complete>10</complete>
+   </task>
+   <task>
+      <name>Make cake</name>
+      <complete>5</complete>
+   </task>
+</test>
