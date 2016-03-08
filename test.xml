@@ -2,10 +2,20 @@
 <test>
    <task>
       <name>Break eggs</name>
-      <complete>10</complete>
+      <todo>100</todo>
+      <done>10</done>
    </task>
    <task>
       <name>Make cake</name>
-      <complete>5</complete>
+      <task>
+         <name>Add sugar</name>
+         <todo>5</todo>
+         <done>2</done>
+      </task>
+      <task>
+         <name>Add eggs</name>
+         <todo>6</todo>
+         <done>3</done>
+      </task>
    </task>
 </test>
