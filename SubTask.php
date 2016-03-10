@@ -112,25 +112,39 @@
             echo '      <div id="code_hierarchy">&nbsp;</div>';
             echo '</div>';
          
-         } 
+         }
+
+         $sun = array("",array(10,10),array(
+                        array("1",array(8,8)),array(
+                           array("a",array(6,6)),
+                           array("b",array(1,1)),
+                           array("c",array(1,1)),
+                        ),
+                        array("2",array(1,1)),
+                        array("3",array(1,1))
+                     )
+                  ); 
+         $test = "testhhh";
       ?> 
-
-
    </body>
 </html>
 
 <script type="text/javascript">
-code_hierarchy_data_1 = 
+         code_hierarchy_data_1 = 
    ["",[10,10],[
       ["1",[8,8],[
          ["a",[6,6]],
          ["b",[1,1]],
-         ["C",[1,1]]
+         ["c",[1,1]]
          ]
       ],
       ["2",[1,1]],
       ["3",[1,1]]
       ]
    ];
+
+   var sun = <?php echo json_encode($sun); ?>; 
+   alert(code_hierarchy_data_1);
+   alert(sun);
 
 </script>
