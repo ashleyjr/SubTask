@@ -1,21 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <test>
-   <task>
-      <name>Break eggs</name>
-      <todo>100</todo>
-      <done>10</done>
-   </task>
-   <task>
-      <name>Make cake</name>
-      <task>
-         <name>Add sugar</name>
-         <todo>5</todo>
-         <done>2</done>
-      </task>
-      <task>
-         <name>Add eggs</name>
-         <todo>6</todo>
-         <done>3</done>
-      </task>
-   </task>
+      <name>Make Cake</name>
+      <todo>10</todo>
+      <done>3</done>
+      <sub>
+         <task>
+            <name>Mix</name>
+            <todo>8</todo>
+            <done>2</done>
+            <sub>
+               <task>
+                  <name>Eggs</name>
+                  <todo>6</todo>
+                  <done>0</done>
+               </task>
+               <task>
+                  <name>Flour</name>
+                  <todo>1</todo>
+                  <done>1</done>
+               </task>
+               <task>
+                  <name>Milk</name>
+                  <todo>1</todo>
+                  <done>1</done>
+               </task>
+            </sub>
+         </task>
+         <task>
+            <name>Smash Eggs</name>
+            <todo>1</todo>
+            <done>1</done>
+         </task>
+         <task>
+            <name>Eat cake</name>
+            <todo>1</todo>
+            <done>0</done>
+         </task>
+
+      </sub>     
 </test>

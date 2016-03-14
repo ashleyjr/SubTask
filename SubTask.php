@@ -74,28 +74,7 @@
             $xml = file_get_contents($filename);                                                # Open the xml file as an array
             $p = xml_parser_create();
             xml_parse_into_struct($p, $xml, $vals, $index);
-            xml_parser_free($p);
-            $layers = 0;                                                                        # Find the number of layers in the xml file
-            for($i=0;$i<count($vals);$i++){
-               if($vals[$i]['level'] > $layers) $layers = $vals[$i]['level'];   
-            }
-            $layers = $layers/2; 
-            $arr_str = "";                                                                      # Build a string containing the array data
-            for($i=0;$i<count($vals);$i++){
-               if($vals[$i]['tag'] == "NAME"){
-                  $arr_str .= "<br>";
-                  for($j=0;$j<$vals[$i]['level'];$j++){
-                     $arr_str .= "...";
-                  }
-                  $arr_str .= $vals[$i]['value']." ";
-               }
-               if($vals[$i]['tag'] == "TODO"){
-                  $arr_str .= $vals[$i]['value']."/";
-               }
-               if($vals[$i]['tag'] == "DONE"){
-                  $arr_str .= $vals[$i]['value'];
-               }
-            }
+            xml_parser_free($p); 
             echo '<div>';                                                                       # Print html
             echo '   <div id="title">';
             echo '      <h1>SubTask</h1>';
@@ -106,7 +85,6 @@
             echo '      <input type="text" size="25" value="Enter your name here!">';
             echo '      <input type="submit" value="Submit" onclick="init_plots(1)"><br>';
             echo '      <input type="submit" value="Submit" onclick="init_plots(0)"><br>';
-            echo '      '.$arr_str;
             echo '   </div>';
             echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
             echo '      <div id="code_hierarchy">&nbsp;</div>';
@@ -114,23 +92,24 @@
          
          }
 
+         $new = $xml;
+         $new = str_replace("<sub>", ",[", $new);
+         $new = str_replace("</sub>", "]", $new);
+         $new = str_replace("<task>", "[", $new);
+         $new = str_replace("</task>", "],", $new);
+         $new = str_replace("<name>", "'", $new);
+         $new = str_replace("</name>", "',[", $new);
+         $new = str_replace("<todo>", "", $new);
+         $new = str_replace("</todo>", ",", $new);
+         $new = str_replace("<done>", "", $new);
+         $new = str_replace("</done>", "]", $new);
+         $new = str_replace("<test>", "code_hierarchy_data_1 = [", $new);
+         $new = str_replace("</test>", "];", $new);
+         $new = str_replace("</test>", "];", $new);
+
          $filename = 'data.js';                                                                 # Use php to create a js file
-         $file = fopen($filename,"wb");
-         $entry ="                                                                           
-            code_hierarchy_data_1 = 
-               ["",[10,10],[
-                  ["1",[8,8],[
-                     ["a",[6,6]],
-                     ["b",[1,1]],
-                     ["c",[1,1]]
-                  ]
-               ],
-                  ["2",[1,1]],
-                  ["3",[1,1]]
-            ]
-         ]; 
-         ";                                                                                     # Contains the array to plotted
-         fwrite($file,$entry);
+         $file = fopen($filename,"wb");                                                                                     # Contains the array to plotted
+         fwrite($file,$new);
          fclose($file);
 
 
