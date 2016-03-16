@@ -89,30 +89,40 @@
             echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
             echo '      <div id="code_hierarchy">&nbsp;</div>';
             echo '</div>';
+
+            $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));  
+            if(isset($_GET['add'])){
+               $xml->sub[0]->addChild('task');
+               $output = $xml->asXML();
+               # Use DomDoc to format
+               $doc = new DOMDocument();
+               $doc->preserveWhiteSpace = false;
+               $doc->formatOutput = true;
+               $doc->loadXML($output);
+               $output =  $doc->saveXML();
+               file_put_contents("compare.xml",$output);
+            }
          
+            $new = file_get_contents($filename);                                                # Open the xml file as an array
+            $new = str_replace("<sub>", ",[", $new);
+            $new = str_replace("</sub>", "]", $new);
+            $new = str_replace("<task>", "[", $new);
+            $new = str_replace("</task>", "],", $new);
+            $new = str_replace("<name>", "'", $new);
+            $new = str_replace("</name>", "',[", $new);
+            $new = str_replace("<todo>", "", $new);
+            $new = str_replace("</todo>", ",", $new);
+            $new = str_replace("<done>", "", $new);
+            $new = str_replace("</done>", "]", $new);
+            $new = str_replace("<test>", "code_hierarchy_data_1 = [", $new);
+            $new = str_replace("</test>", "];", $new);
+            $new = str_replace("</test>", "];", $new);
+   
+            $filename = 'data.js';                                                                 # Use php to create a js file
+            $file = fopen($filename,"wb");                                                                                     # Contains the array to plotted
+            fwrite($file,$new);
+            fclose($file);
          }
-
-         $new = $xml;
-         $new = str_replace("<sub>", ",[", $new);
-         $new = str_replace("</sub>", "]", $new);
-         $new = str_replace("<task>", "[", $new);
-         $new = str_replace("</task>", "],", $new);
-         $new = str_replace("<name>", "'", $new);
-         $new = str_replace("</name>", "',[", $new);
-         $new = str_replace("<todo>", "", $new);
-         $new = str_replace("</todo>", ",", $new);
-         $new = str_replace("<done>", "", $new);
-         $new = str_replace("</done>", "]", $new);
-         $new = str_replace("<test>", "code_hierarchy_data_1 = [", $new);
-         $new = str_replace("</test>", "];", $new);
-         $new = str_replace("</test>", "];", $new);
-
-         $filename = 'data.js';                                                                 # Use php to create a js file
-         $file = fopen($filename,"wb");                                                                                     # Contains the array to plotted
-         fwrite($file,$new);
-         fclose($file);
-
-
    ?>
    <script src="data.js"></script>
 
