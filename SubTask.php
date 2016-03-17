@@ -71,10 +71,7 @@
                fwrite($file,$entry);
                fclose($file);
             }
-            $xml = file_get_contents($filename);                                                # Open the xml file as an array
-            $p = xml_parser_create();
-            xml_parse_into_struct($p, $xml, $vals, $index);
-            xml_parser_free($p); 
+            
             echo '<div>';                                                                       # Print html
             echo '   <div id="title">';
             echo '      <h1>SubTask</h1>';
@@ -90,9 +87,21 @@
             echo '      <div id="code_hierarchy">&nbsp;</div>';
             echo '</div>';
 
-            $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));  
-            if(isset($_GET['add'])){
+   
+            if(   isset($_GET['one']) and
+                  isset($_GET['name']) and
+                  isset($_GET['todo']) and
+                  isset($_GET['done']) 
+               ){
+               $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));   
                $xml->sub[0]->addChild('task');
+               $last =  $xml->sub[0]->count()-1;
+               $xml->sub[0]->task[$last]->addChild('name');
+               $xml->sub[0]->task[$last]->addChild('todo');
+               $xml->sub[0]->task[$last]->addChild('done');
+               $xml->sub[0]->task[$last]->name = $_GET['name'];
+               $xml->sub[0]->task[$last]->todo = $_GET['todo'];
+               $xml->sub[0]->task[$last]->done = $_GET['done'];
                $output = $xml->asXML();
                # Use DomDoc to format
                $doc = new DOMDocument();
@@ -100,10 +109,11 @@
                $doc->formatOutput = true;
                $doc->loadXML($output);
                $output =  $doc->saveXML();
-               file_put_contents("compare.xml",$output);
+               file_put_contents($filename,$output);
             }
          
             $new = file_get_contents($filename);                                                # Open the xml file as an array
+            $new = str_replace("<?xml version=\"1.0\"?>","",$new);
             $new = str_replace("<sub>", ",[", $new);
             $new = str_replace("</sub>", "]", $new);
             $new = str_replace("<task>", "[", $new);
