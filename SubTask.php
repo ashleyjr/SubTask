@@ -62,6 +62,28 @@
       </head>
    <body>  
       <?php
+         
+         function xml2js($xmlfile,$jsfile){
+            $new = file_get_contents($xmlfile);                                                # Open the xml file as an array
+            $new = str_replace("<?xml version=\"1.0\"?>","",$new);
+            $new = str_replace("<sub>", ",[", $new);
+            $new = str_replace("</sub>", "]", $new);
+            $new = str_replace("<task>", "[", $new);
+            $new = str_replace("</task>", "],", $new);
+            $new = str_replace("<name>", "'", $new);
+            $new = str_replace("</name>", "',[", $new);
+            $new = str_replace("<todo>", "", $new);
+            $new = str_replace("</todo>", ",", $new);
+            $new = str_replace("<done>", "", $new);
+            $new = str_replace("</done>", "]", $new);
+            $new = str_replace("<test>", "code_hierarchy_data_1 = [", $new);
+            $new = str_replace("</test>", "];", $new);
+            $new = str_replace("</test>", "];", $new); 
+            $file = fopen($jsfile,"wb");                                                                                     # Contains the array to plotted
+            fwrite($file,$new);
+            fclose($file);
+         }
+
          if(isset($_GET['id'])){
             $id = $_GET['id'];
             $filename = $id.'.xml';
@@ -80,8 +102,7 @@
             echo '   </div>';
             echo '   <div id="input">';
             echo '      <input type="text" size="25" value="Enter your name here!">';
-            echo '      <input type="submit" value="Submit" onclick="init_plots(1)"><br>';
-            echo '      <input type="submit" value="Submit" onclick="init_plots(0)"><br>';
+            echo '      <input type="submit" value="Submit" onclick="init_plots()"><br>';
             echo '   </div>';
             echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
             echo '      <div id="code_hierarchy">&nbsp;</div>';
@@ -110,32 +131,15 @@
                $doc->loadXML($output);
                $output =  $doc->saveXML();
                file_put_contents($filename,$output);
-            }
-         
-            $new = file_get_contents($filename);                                                # Open the xml file as an array
-            $new = str_replace("<?xml version=\"1.0\"?>","",$new);
-            $new = str_replace("<sub>", ",[", $new);
-            $new = str_replace("</sub>", "]", $new);
-            $new = str_replace("<task>", "[", $new);
-            $new = str_replace("</task>", "],", $new);
-            $new = str_replace("<name>", "'", $new);
-            $new = str_replace("</name>", "',[", $new);
-            $new = str_replace("<todo>", "", $new);
-            $new = str_replace("</todo>", ",", $new);
-            $new = str_replace("<done>", "", $new);
-            $new = str_replace("</done>", "]", $new);
-            $new = str_replace("<test>", "code_hierarchy_data_1 = [", $new);
-            $new = str_replace("</test>", "];", $new);
-            $new = str_replace("</test>", "];", $new);
-   
-            $filename = 'data.js';                                                                 # Use php to create a js file
-            $file = fopen($filename,"wb");                                                                                     # Contains the array to plotted
-            fwrite($file,$new);
-            fclose($file);
+            } 
+            xml2js($filename,'data.js');
          }
-   ?>
-   <script src="data.js"></script>
 
+?>
+   <script src="data.js"></script>
+   <script type="text/javascript">
+      init_plots();
+   </script>
    </body>
 </html>
 
