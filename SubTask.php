@@ -84,6 +84,17 @@
             fclose($file);
          }
 
+         function xml_update($xmlfile){
+               $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));    
+               $output = $xml->asXML();
+               $doc = new DOMDocument();
+               $doc->preserveWhiteSpace = false;
+               $doc->formatOutput = true;
+               $doc->loadXML($output);
+               $output =  $doc->saveXML();
+               file_put_contents($xmlfile,$output);
+         }
+
          if(isset($_GET['id'])){
             $id = $_GET['id'];
             $filename = $id.'.xml';
@@ -94,21 +105,6 @@
                fclose($file);
             }
             
-            echo '<div>';                                                                       # Print html
-            echo '   <div id="title">';
-            echo '      <h1>SubTask</h1>';
-            echo '      <h2>'.$id.'</h2>';
-            echo '      <h3>'.$layers.' layers</h3>';
-            echo '   </div>';
-            echo '   <div id="input">';
-            echo '      <input type="text" size="25" value="Enter your name here!">';
-            echo '      <input type="submit" value="Submit" onclick="init_plots()"><br>';
-            echo '   </div>';
-            echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
-            echo '      <div id="code_hierarchy">&nbsp;</div>';
-            echo '</div>';
-
-   
             if(   isset($_GET['one']) and
                   isset($_GET['name']) and
                   isset($_GET['todo']) and
@@ -131,11 +127,28 @@
                $doc->loadXML($output);
                $output =  $doc->saveXML();
                file_put_contents($filename,$output);
-            } 
-            xml2js($filename,'data.js');
-         }
+            }
 
-?>
+            xml_update($filename);              # Make sure the hierarchy adds up in the xml
+
+            xml2js($filename,'data.js');        # convert the xml file to js array
+         
+            
+            echo '<div>';                                                                       # Print html
+            echo '   <div id="title">';
+            echo '      <h1>SubTask</h1>';
+            echo '      <h2>'.$id.'</h2>';
+            echo '      <h3>'.$layers.' layers</h3>';
+            echo '   </div>';
+            echo '   <div id="input">';
+            echo '      <input type="text" size="25" value="Enter your name here!">';
+            echo '      <input type="submit" value="Submit" onclick="init_plots()"><br>';
+            echo '   </div>';
+            echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
+            echo '      <div id="code_hierarchy">&nbsp;</div>';
+            echo '</div>';
+         }
+   ?>
    <script src="data.js"></script>
    <script type="text/javascript">
       init_plots();
