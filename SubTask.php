@@ -130,20 +130,44 @@
                fclose($file);
             }
             
-            if(   isset($_GET['one']) and
-                  isset($_GET['name']) and
+            if(   isset($_GET['name']) and
                   isset($_GET['todo']) and
                   isset($_GET['done']) 
                ){
                $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));   
-               $xml->sub[0]->addChild('task');
-               $last =  $xml->sub[0]->count()-1;
-               $xml->sub[0]->task[$last]->addChild('name');
-               $xml->sub[0]->task[$last]->addChild('todo');
-               $xml->sub[0]->task[$last]->addChild('done');
-               $xml->sub[0]->task[$last]->name = $_GET['name'];
-               $xml->sub[0]->task[$last]->todo = $_GET['todo'];
-               $xml->sub[0]->task[$last]->done = $_GET['done'];
+               if(isset($_GET['one'])){
+                  if(isset($_GET['two'])){
+                     echo "two"; 
+                     $one_length = $xml->sub[0]->count()-1;
+                     for($i=0;$i<$one_length;$i++){
+                        if($xml->sub[0]->task[$i]->name == $_GET['one']){
+                           $found = $i;
+                        }
+                     }
+                     echo $found;
+                     if(!isset($xml->sub[0]->task[$found]->sub[0])){
+                        $xml->sub[0]->task[$found]->addChild('sub');
+                     }
+                     $xml->sub[0]->task[$found]->sub[0]->addChild('task');
+                     $last = $xml->sub[0]->task[$found]->sub[0]->count()-1;
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('name');
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('todo');
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('done');
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->name = $_GET['name'];
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->todo = $_GET['todo'];
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->done = $_GET['done'];
+
+                  }else{  
+                     $xml->sub[0]->addChild('task');
+                     $last = $xml->sub[0]->count()-1;
+                     $xml->sub[0]->task[$last]->addChild('name');
+                     $xml->sub[0]->task[$last]->addChild('todo');
+                     $xml->sub[0]->task[$last]->addChild('done');
+                     $xml->sub[0]->task[$last]->name = $_GET['name'];
+                     $xml->sub[0]->task[$last]->todo = $_GET['todo'];
+                     $xml->sub[0]->task[$last]->done = $_GET['done'];
+                  }
+               }
                xmlSave($xml,$filename);
             }
 
