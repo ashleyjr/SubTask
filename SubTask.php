@@ -63,7 +63,7 @@
    <body>  
       <?php
          
-         function xml2js($xmlfile,$jsfile){
+         function xml2js($id,$xmlfile,$jsfile){
             $new = file_get_contents($xmlfile);                                                # Open the xml file as an array
             $new = str_replace("<?xml version=\"1.0\"?>","",$new);
             $new = str_replace("<sub>", ",[", $new);
@@ -76,14 +76,13 @@
             $new = str_replace("</todo>", ",", $new);
             $new = str_replace("<done>", "", $new);
             $new = str_replace("</done>", "]", $new);
-            $new = str_replace("<test>", "code_hierarchy_data_1 = [", $new);
-            $new = str_replace("</test>", "];", $new);
-            $new = str_replace("</test>", "];", $new); 
+            $new = str_replace("<".$id.">", "code_hierarchy_data_1 = [", $new);
+            $new = str_replace("</".$id.">", "];", $new);
             $file = fopen($jsfile,"wb");                                                                                     # Contains the array to plotted
             fwrite($file,$new);
             fclose($file);
          }
-
+         
          function xmlSave($xml,$xmlfile){
                $output = $xml->asXML();
                $doc = new DOMDocument();
@@ -95,8 +94,23 @@
 
          }
 
+         function xmlCreateIfNone($name){
+            $filename = $name.'.xml';
+            if(!file_exists($filename)){  
+               $xml = new SimpleXMLElement('<'.$name.'></'.$name.'>');
+               $xml->addChild('name');
+               $xml->addChild('todo');
+               $xml->addChild('done');
+               $xml->name = "name";
+               $xml->todo = 100;
+               $xml->done = 50; 
+               xmlSave($xml,$filename);
+            }
+         }
+
          function xmlCheckHeir($xmlfile){
-               $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));     
+            $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));     
+            if(isset($xml->sub[0])){
                $one = $xml->sub[0]->count();
                $one_todo = 0;
                $one_done = 0;
@@ -117,34 +131,27 @@
                }
                $xml->todo = $one_todo;
                $xml->done = $one_done;
-               xmlSave($xml,$xmlfile);
+            }   
+            xmlSave($xml,$xmlfile);
          }
 
          if(isset($_GET['id'])){
             $id = $_GET['id'];
             $filename = $id.'.xml';
-            if(!file_exists($filename)){ 
-               $file = fopen($filename,"wb");
-               $entry ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<".$id.">\n</".$id.">";     # Make an empty xml file
-               fwrite($file,$entry);
-               fclose($file);
-            }
-            
+            xmlCreateIfNone($id); 
             if(   isset($_GET['name']) and
                   isset($_GET['todo']) and
                   isset($_GET['done']) 
                ){
                $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));   
                if(isset($_GET['one'])){
-                  if(isset($_GET['two'])){
-                     echo "two"; 
+                  if(isset($_GET['two'])){ 
                      $one_length = $xml->sub[0]->count()-1;
                      for($i=0;$i<$one_length;$i++){
                         if($xml->sub[0]->task[$i]->name == $_GET['one']){
                            $found = $i;
                         }
                      }
-                     echo $found;
                      if(!isset($xml->sub[0]->task[$found]->sub[0])){
                         $xml->sub[0]->task[$found]->addChild('sub');
                      }
@@ -157,7 +164,10 @@
                      $xml->sub[0]->task[$found]->sub[0]->task[$last]->todo = $_GET['todo'];
                      $xml->sub[0]->task[$found]->sub[0]->task[$last]->done = $_GET['done'];
 
-                  }else{  
+                  }else{ 
+                     if(!isset($xml->sub[0])){
+                        $xml->addChild('sub');
+                     } 
                      $xml->sub[0]->addChild('task');
                      $last = $xml->sub[0]->count()-1;
                      $xml->sub[0]->task[$last]->addChild('name');
@@ -173,7 +183,7 @@
 
             xmlCheckHeir($filename);            # Make sure the hierarchy adds up in the xml
 
-            xml2js($filename,'data.js');        # convert the xml file to js array
+            xml2js($id,$filename,'data.js');        # convert the xml file to js array
          
             
             echo '<div>';                                                                       # Print html
