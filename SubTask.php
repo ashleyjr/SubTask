@@ -84,8 +84,7 @@
             fclose($file);
          }
 
-         function xml_update($xmlfile){
-               $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));    
+         function xmlSave($xml,$xmlfile){
                $output = $xml->asXML();
                $doc = new DOMDocument();
                $doc->preserveWhiteSpace = false;
@@ -93,6 +92,12 @@
                $doc->loadXML($output);
                $output =  $doc->saveXML();
                file_put_contents($xmlfile,$output);
+
+         }
+
+         function xmlCheckHeir($xmlfile){
+               $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));    
+               xmlSave($xml,$xmlfile);
          }
 
          if(isset($_GET['id'])){
@@ -119,17 +124,10 @@
                $xml->sub[0]->task[$last]->name = $_GET['name'];
                $xml->sub[0]->task[$last]->todo = $_GET['todo'];
                $xml->sub[0]->task[$last]->done = $_GET['done'];
-               $output = $xml->asXML();
-               # Use DomDoc to format
-               $doc = new DOMDocument();
-               $doc->preserveWhiteSpace = false;
-               $doc->formatOutput = true;
-               $doc->loadXML($output);
-               $output =  $doc->saveXML();
-               file_put_contents($filename,$output);
+               xmlSave($xml,$filename);
             }
 
-            xml_update($filename);              # Make sure the hierarchy adds up in the xml
+            xmlCheckHeir($filename);            # Make sure the hierarchy adds up in the xml
 
             xml2js($filename,'data.js');        # convert the xml file to js array
          
