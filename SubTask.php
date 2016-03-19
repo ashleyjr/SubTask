@@ -96,7 +96,27 @@
          }
 
          function xmlCheckHeir($xmlfile){
-               $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));    
+               $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));     
+               $one = $xml->sub[0]->count();
+               $one_todo = 0;
+               $one_done = 0;
+               for($i=0;$i<$one;$i++){
+                  $one_todo += $xml->sub[0]->task[$i]->todo;
+                  $one_done += $xml->sub[0]->task[$i]->done;
+                  if(isset($xml->sub[0]->task[$i]->sub[0])){
+                     $two = $xml->sub[0]->task[$i]->sub[0]->count();
+                     $two_todo = 0;
+                     $two_done = 0;
+                     for($j=0;$j<$two;$j++){
+                        $two_todo += $xml->sub[0]->task[$i]->sub[0]->task[$j]->todo; 
+                        $two_done += $xml->sub[0]->task[$i]->sub[0]->task[$j]->done; 
+                     }
+                     $xml->sub[0]->task[$i]->todo = $two_todo;
+                     $xml->sub[0]->task[$i]->done = $two_done;
+                  }
+               }
+               $xml->todo = $one_todo;
+               $xml->done = $one_done;
                xmlSave($xml,$xmlfile);
          }
 
