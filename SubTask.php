@@ -81,6 +81,11 @@
             $file = fopen($jsfile,"wb");                                                                                     # Contains the array to plotted
             fwrite($file,$new);
             fclose($file);
+            echo '<script src="data.js"></script>';
+            echo '<script type="text/javascript">';
+            echo '   init_plots();';
+            echo '</script>';
+
          }
          
          function xmlSave($xml,$xmlfile){
@@ -101,9 +106,9 @@
                $xml->addChild('name');
                $xml->addChild('todo');
                $xml->addChild('done');
-               $xml->name = "name";
-               $xml->todo = 100;
-               $xml->done = 50; 
+               $xml->name = $name;
+               $xml->todo = 0;
+               $xml->done = 0; 
                xmlSave($xml,$filename);
             }
          }
@@ -193,18 +198,24 @@
             echo '      <h3>'.$layers.' layers</h3>';
             echo '   </div>';
             echo '   <div id="input">';
-            echo '      <input type="text" size="25" value="Enter your name here!">';
-            echo '      <input type="submit" value="Submit" onclick="init_plots()"><br>';
+            echo '      <form id="starling" name="starling" method="get" action="">';
+            echo '         <input type="hidden" name="id" value='.$id.'>';
+            echo '         <input type="hidden" name="one" value="">';
+            echo '         <input type="text" name="name"><br>';
+            echo '         <input type="text" name="todo"><br>';
+            echo '         <input type="text" name="done"><br>';
+            echo '         <input type="submit" value="Submit"> ';
+            echo '      </form>';
             echo '   </div>';
             echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
             echo '      <div id="code_hierarchy">&nbsp;</div>';
             echo '</div>';
+            echo '<script src="data.js"></script>';
+            echo '<script type="text/javascript">';
+            echo '   init_plots();';
+            echo '</script>';
          }
    ?>
-   <script src="data.js"></script>
-   <script type="text/javascript">
-      init_plots();
-   </script>
    </body>
 </html>
 
