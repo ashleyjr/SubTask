@@ -9,10 +9,10 @@
             $new = str_replace("</task>", "],", $new);
             $new = str_replace("<name>", "'", $new);
             $new = str_replace("</name>", "',[", $new);
-            $new = str_replace("<todo>", "", $new);
-            $new = str_replace("</todo>", ",", $new);
             $new = str_replace("<done>", "", $new);
-            $new = str_replace("</done>", "]", $new);
+            $new = str_replace("</done>", ",", $new);
+            $new = str_replace("<todo>", "", $new);
+            $new = str_replace("</todo>", "]", $new);
             $new = str_replace("<".$id.">", "code_hierarchy_data_1 = [", $new);
             $new = str_replace("</".$id.">", "];", $new);
             $file = fopen($jsfile,"wb");                                                                                     # Contains the array to plotted
@@ -41,8 +41,8 @@
             if(!file_exists($filename)){  
                $xml = new SimpleXMLElement('<'.$name.'></'.$name.'>');
                $xml->addChild('name');
-               $xml->addChild('todo');
                $xml->addChild('done');
+               $xml->addChild('todo');
                $xml->name = $name;
                $xml->todo = 0;
                $xml->done = 0; 
@@ -71,8 +71,8 @@
                      $xml->sub[0]->task[$i]->done = $two_done;
                   }
                }
-               $xml->todo = $one_todo;
-               $xml->done = $one_done;
+               $xml->todo = $one_done;
+               $xml->done = $one_todo;
             }   
             xmlSave($xml,$xmlfile);
          }
@@ -100,11 +100,11 @@
                      $xml->sub[0]->task[$found]->sub[0]->addChild('task');
                      $last = $xml->sub[0]->task[$found]->sub[0]->count()-1;
                      $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('name');
-                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('todo');
                      $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('done');
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('todo');
                      $xml->sub[0]->task[$found]->sub[0]->task[$last]->name = $_GET['name'];
-                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->todo = $_GET['todo'];
-                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->done = $_GET['done']; 
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->done = $_GET['done'];
+                     $xml->sub[0]->task[$found]->sub[0]->task[$last]->todo = $_GET['todo']; 
                   }else{ 
                      if(!isset($xml->sub[0])){
                         $xml->addChild('sub');
@@ -112,11 +112,11 @@
                      $xml->sub[0]->addChild('task');
                      $last = $xml->sub[0]->count()-1;
                      $xml->sub[0]->task[$last]->addChild('name');
-                     $xml->sub[0]->task[$last]->addChild('todo');
                      $xml->sub[0]->task[$last]->addChild('done');
+                     $xml->sub[0]->task[$last]->addChild('todo');
                      $xml->sub[0]->task[$last]->name = $_GET['name'];
-                     $xml->sub[0]->task[$last]->todo = $_GET['todo'];
                      $xml->sub[0]->task[$last]->done = $_GET['done'];
+                     $xml->sub[0]->task[$last]->todo = $_GET['todo'];
                   }
                }
                xmlSave($xml,$filename);
