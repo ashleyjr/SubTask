@@ -123,7 +123,9 @@
                header("Location: http://www.ajrobinson.org/SubTask/SubTask.php?id=".$id);
                exit;   
             }
-?>       
+?>      
+
+
 <!DOCTYPE html>
 <html>
    <meta charset="utf-8" />
@@ -152,7 +154,7 @@
          width: 40%;
          height: 40%;
          top: 10%;
-         left: 55%;
+         left: 10%;
       }
       
       #code_hierarchy_legend
@@ -160,7 +162,7 @@
          position:absolute;
          width:40%;
          top:40%;
-         left:20%;
+         left:40%;
          font-size:1.4em;
       }
       
