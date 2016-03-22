@@ -77,6 +77,8 @@
             xmlSave($xml,$xmlfile);
          }
 
+         echo file_get_contents('SubTask.html');
+            
          if(isset($_GET['id'])){
             $id = $_GET['id'];
             $filename = $id.'.xml';
@@ -123,105 +125,49 @@
                header("Location: http://www.ajrobinson.org/SubTask/SubTask.php?id=".$id);
                exit;   
             }
-?>      
 
-
-<!DOCTYPE html>
-<html>
-   <meta charset="utf-8" />
-   <style>
-   
-      html
-      {
-          font-family: Century Gothic, Arial, Helvetica;
-          font-size:1em;
-      }
-      
-      body
-      {
-          padding:10px;
-      }
-      
-      form
-      {
-      
-      }
-      
-      #code_hierarchy
-      {
-         margin:0 auto;
-         position: absolute;
-         width: 40%;
-         height: 40%;
-         top: 10%;
-         left: 10%;
-      }
-      
-      #code_hierarchy_legend
-      {
-         position:absolute;
-         width:40%;
-         top:40%;
-         left:40%;
-         font-size:1.4em;
-      }
-      
-      #title
-      {
-         position:absolute;
-         width:40%;
-         top:0%;
-         left:2%;
-         font-size:1.4em;
-      }
-   
-      #input
-      {
-         position:absolute;
-         width:40%;
-         top:40%;
-         left:2%;
-         font-size:1.4em;
-      } 
-   </style>
-   <head>
-      <script src="d3.js"></script>
-      <script src="chart.js"></script>
-      </head>
-         <body>
-
-<?php
             xmlCheckHeir($filename);            # Make sure the hierarchy adds up in the xml
 
             xml2js($id,$filename,'data.js');        # convert the xml file to js array
-         
-            
-            echo '<div>';                                                                       # Print html
-            echo '   <div id="title">';
-            echo '      <h1>SubTask: '.$id.'</h1>';
-            echo '   </div>';
-            echo '   <div id="input">';
-            echo '      <form id="new" name="new" method="get" action="">';
-            echo '         <input type="hidden" name="id" value='.$id.'>';
-            echo '         <input type="hidden" name="one" value="">';
-            echo '         <label for="new">Name</label><br>'; 
-            echo '         <input type="text" name="name"><br>';
-            echo '         <label for="new">Todo</label><br>'; 
-            echo '         <input type="text" name="todo"><br>';
-            echo '         <label for="new">Done</label><br>'; 
-            echo '         <input type="text" name="done"><br>';
-            echo '         <input type="submit" value="Submit"> ';
-            echo '      </form>';
-            echo '   </div>';
-            echo '      <div id="code_hierarchy_legend">&nbsp;</div>';
-            echo '      <div id="code_hierarchy">&nbsp;</div>';
-            echo '</div>';
-            echo '<script>'.file_get_contents('data.js').'</script>';
-            echo '<script type="text/javascript">';
-            echo '   init_plots();';
-            echo '</script>';
+
+            echo '
+               <div>                                          
+                  <div id="title">
+                     <h1>SubTask: '.$id.'</h1>
+                  </div>
+                  <div id="input">
+                     <form id="new" name="new" method="get" action="">
+                        <input type="hidden" name="id" value='.$id.'>
+                        <input type="hidden" name="one" value="">
+                        <label for="new">Name</label><br>
+                        <input type="text" name="name"><br>
+                        <label for="new">Todo</label><br> 
+                        <input type="text" name="todo"><br>
+                        <label for="new">Done</label><br> 
+                        <input type="text" name="done"><br>
+                        <input type="submit" value="Submit">
+                     </form>
+                  </div>
+                     <div id="code_hierarchy_legend">&nbsp;</div>
+                     <div id="code_hierarchy">&nbsp;</div>
+                  </div>
+                  <script>'.file_get_contents('data.js').'</script>
+                  <script type="text/javascript">
+                     init_plots();
+                  </script>
+                  </body>
+               </html>';
+         }else{
+            echo '
+               <div id="title">
+                  <h1>SubTask</h1>
+               </div>
+               <div id="input">
+                     <form id="new" name="new" method="get" action=""> 
+                        <input type="text" name="id"><br>
+                        <input type="submit" value="Load">
+                     </form>
+                  </div>';
          }
-   ?>
-   </body>
-</html>
+?>
 
