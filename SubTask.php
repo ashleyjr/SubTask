@@ -175,7 +175,7 @@ function main(){
          </div>
          <div id="input">
             <form id="new" name="new" method="get" action=""> 
-               <input list="id" name="id">
+               <input list="id" name="id" autocomplete="off">
                   <datalist id="id">'.$list.'</datalist>
                <input type="submit" value="Load">
             </form>
