@@ -237,12 +237,12 @@ return d[1][0];
 
 function label_function(d)
 {
-return d[2]+": "+d[4][0]+" characters, "+d[4][1]+" lines of code.";
+return d[2]+": Todo: "+d[4][0]+", Done: "+d[4][1];
 }
 
 function legend_function(d)
 {
-return "<h2>"+d[2]+"&nbsp;</h2><p>"+d[4][0]+" characters, "+d[4][1]+" lines of code.</p>"
+return "<h2>"+d[2]+"&nbsp;</h2><p> Todo: "+d[4][0]+"<br>Done: " +d[4][1]+"</p>"
 }
 
 var color = d3.scale.category20c();
