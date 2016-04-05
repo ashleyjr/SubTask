@@ -71,7 +71,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
         slices.append("path")
         .attr("d", arc)
         .attr("id",function(d,i){return element_id+i;})
-        .style("fill", function(d) { return color_function(d);})
+        .style("fill", function(d) {3244733})                  // This sets the polygon colour
         .attr("class","form");
     slices.on("click",animate);
 
