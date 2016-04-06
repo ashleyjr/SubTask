@@ -227,52 +227,48 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
 }
 
 
-function init_plots(val)
+function init_plots()
 {
-
-function count_function(d)
-{
-return d[1][0];
-}
-
-function label_function(d)
-{
-   if(d[4][0] < d[4][1]){
-      todo = d[4][1];
-      done = d[4][0];
-   }else{
-      todo = d[4][0];
-      done = d[4][1];
+   
+   function count_function(d)
+   {
+   return d[1][0];
    }
-   return d[2]+": "+todo+", "+done+"";
-}
-
-function legend_function(d)
-{
-   if(d[4][0] < d[4][1]){ 
-      todo = d[4][1];
-      done = d[4][0];
-   }else{
-      todo = d[4][0];
-      done = d[4][1];
+   
+   function label_function(d)
+   {
+      if(d[4][0] < d[4][1]){
+         todo = d[4][1];
+         done = d[4][0];
+      }else{
+         todo = d[4][0];
+         done = d[4][1];
+      }
+      return d[2]+": "+todo+", "+done+"";
    }
-   return "<h2>"+d[2]+"&nbsp;</h2><p>Todo: "+todo+", Done "+done+"</p>"
-}
-
-
-var color = d3.scale.category20c();
-
-function color_function(d)
-{
-return color(d[2]);
-}
-d3.select(self.frameElement).style("height", "800px");
-if(val){
-   init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data,count_function,color_function,label_function,legend_function);
-   }else{
+   
+   function legend_function(d)
+   {
+      if(d[4][0] < d[4][1]){ 
+         todo = d[4][1];
+         done = d[4][0];
+      }else{
+         todo = d[4][0];
+         done = d[4][1];
+      }
+      return "<h2>"+d[2]+"&nbsp;</h2><p>Todo: "+todo+"<br>Done: "+done+"</p>"
+   }
+   
+   
+   var color = d3.scale.category20c();
+   
+   function color_function(d)
+   {
+   return color(d[2]);
+   }
+   
+   d3.select(self.frameElement).style("height", "800px");
    init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data_1,count_function,color_function,label_function,legend_function);
-
-   }
 }
 
  
