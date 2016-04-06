@@ -75,11 +75,11 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
         .attr("class","form");
     slices.on("click",animate);
 
-    if (title_function != undefined)
-    {
-        slices.append("svg:title")
-              .text(title_function);        
-    }
+    //if (title_function != undefined)
+    //{
+    //    slices.append("svg:title")
+    //          .text(title_function);        
+    //}
     if (legend_function != undefined)
     {
         slices.on("mouseover",update_legend)
@@ -237,13 +237,28 @@ return d[1][0];
 
 function label_function(d)
 {
-return d[2]+": "+d[4][0]+" characters, "+d[4][1]+" lines of code.";
+   if(d[4][0] < d[4][1]){
+      todo = d[4][1];
+      done = d[4][0];
+   }else{
+      todo = d[4][0];
+      done = d[4][1];
+   }
+   return d[2]+": "+todo+", "+done+"";
 }
 
 function legend_function(d)
 {
-return "<h2>"+d[2]+"&nbsp;</h2><p>"+d[4][0]+" characters, "+d[4][1]+" lines of code.</p>"
+   if(d[4][0] < d[4][1]){ 
+      todo = d[4][1];
+      done = d[4][0];
+   }else{
+      todo = d[4][0];
+      done = d[4][1];
+   }
+   return "<h2>"+d[2]+"&nbsp;</h2><p>Todo: "+todo+", Done "+done+"</p>"
 }
+
 
 var color = d3.scale.category20c();
 
