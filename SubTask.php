@@ -12,7 +12,7 @@ function xml2js($id,$xmlfile,$jsfile){
    $new = str_replace("</done>", ",", $new);
    $new = str_replace("<todo>", "", $new);
    $new = str_replace("</todo>", "]", $new);
-   $new = str_replace("<".$id.">", "code_hierarchy_data_1 = [", $new);
+   $new = str_replace("<".$id.">", "code_hierarchy_data = [", $new);
    $new = str_replace("</".$id.">", "];", $new);
    $file = fopen($jsfile,"wb");                                                                                     # Contains the array to plotted
    fwrite($file,$new);
@@ -151,6 +151,7 @@ function main(){
                   <input type="submit" value="New">
                </form>
             </div>
+               <div id="code_hierarchy_select">&nbsp;</div>
                <div id="code_hierarchy_legend">&nbsp;</div>
                <div id="code_hierarchy">&nbsp;</div>
             </div>
