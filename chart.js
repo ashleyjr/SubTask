@@ -160,7 +160,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
         }
          
          var select = d3.select("#"+element_id+"_select") 
-         select.html(String(d[2]));
+         select.html(String(d[2]) + "<br>" + String(d[4]));
         
         animating = true;
         var revert = false;
@@ -249,7 +249,7 @@ function init_plots()
          todo = d[4][0];
          done = d[4][1];
       }
-      return "<h2>"+d[2]+"&nbsp;</h2><p>Todo: "+todo+"<br>Done: "+done+"</p>"
+      return "<h2>"+d[2]+"&nbsp;</h2>" //<p>Todo: "+todo+"<br>Done: "+done+"</p>"
    }
     
    var color = d3.scale.category20c();
