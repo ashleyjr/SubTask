@@ -36,9 +36,9 @@ function xmlSave($xml,$xmlfile){
 }
 
 function xmlCreateIfNone($name){
-   $filename = $name.'.xml';
+   $filename = rmWhiteSpace($name).'.xml';
    if(!file_exists($filename)){  
-      $xml = new SimpleXMLElement('<'.$name.'></'.$name.'>');
+      $xml = new SimpleXMLElement('<'.rmWhiteSpace($name).'></'.rmWhiteSpace($name).'>');
       $xml->addChild('name');
       $xml->addChild('done');
       $xml->addChild('todo');
@@ -88,13 +88,17 @@ function queryCheckValid($name){
    }
 }
 
+function rmWhiteSpace($text){
+   return preg_replace('/\s+/', '', $_GET['id']);
+}
+
 function main(){
    $contents = file_get_contents('SubTask.html');
    
    if(isset($_GET['id'])){
       $id = $_GET['id'];
-      $filename = $id.'.xml';
       xmlCreateIfNone($id); 
+      $filename = rmWhiteSpace($id).'.xml';
       if(   isset($_GET['name']) and
             isset($_GET['todo']) and
             isset($_GET['done']) 
@@ -132,22 +136,24 @@ function main(){
             $xml->sub[0]->task[$last]->todo = $_GET['todo'];
          } 
          xmlSave($xml,$filename);
-         header("Location: http://www.ajrobinson.org/SubTask/SubTask.php?id=".$id);
+         header("Location: http://www.ajrobinson.org/SubTask/SubTask.php?id=".rmWhiteSpace($id));
          exit;   
       }
    
       xmlCheckHeir($filename);            # Make sure the hierarchy adds up in the xml
    
-      xml2js($id,$filename,'data.js');        # convert the xml file to js array
-         
+      xml2js(rmWhiteSpace($id),$filename,'data.js');        # convert the xml file to js array
+
+      $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));    
+      $title = $xml->name;
       $contents .='
          <div>                                          
             <div id="title">
-               <h1>SubTask: '.$id.'</h1>
+               <h1>SubTask: '.$title.'</h1>
             </div>
             <div id="input">
                <form id="add" name="add" method="get" action="">
-                  <input type="hidden" name="id" value='.$id.'>
+                  <input type="hidden" name="id" value='.rmWhiteSpace($id).'>
                   <input type="hidden" name="one" value="">
                   <label for="new">Name</label><br>
                   <input type="text" name="name"><br>
