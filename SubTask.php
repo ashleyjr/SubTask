@@ -150,19 +150,36 @@ function main(){
          <div>                                          
             <div id="title">
                <h1>SubTask: '.$title.'</h1>
-            </div>
+            </div> 
             <div id="input">
                <form id="add" name="add" method="get" action="">
                   <input type="hidden" name="id" value='.rmWhiteSpace($id).'>
-                  <input type="hidden" name="one" value="">
-                  <label for="new">Name</label><br>
-                  <input type="text" name="name"><br>
-                  <label for="new">Todo</label><br> 
-                  <input type="text" name="todo"><br>
-                  <label for="new">Done</label><br> 
-                  <input type="text" name="done"><br>
-                  <label for="new">Layer One Parent</label><br> 
-                  <input type="text" name="one"><br>
+                  <table>
+                     <tr>
+                        <td><label for="new">Name</label></td>
+                        <td><input type="text" name="name"></td>
+                     </tr>
+                     <tr>
+                        <td><label for="todo">Todo</label></td>
+                        <td><input type="text" name="todo"></td>
+                     </tr>
+                     <tr>
+                        <td><label for="done">Done</label></td>
+                        <td><input type="text" name="done"></td>
+                     </tr>
+                     <tr>
+                        <td><label for="one">One</label></td>
+                        <td><input type="text" name="one"></td>
+                     </tr>
+                     <tr>
+                        <td><label for="two">Two</label></td>
+                        <td><input type="text" name="two"></td>
+                     </tr>
+                     <tr>
+                        <td><label for="three">Three</label></td>
+                        <td><input type="text" name="three"></td>
+                     </tr>
+                  </table>
                   <input type="submit" value="Submit">
                </form>
                <form id="add" name="add" method="get" action="">
