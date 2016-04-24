@@ -76,6 +76,18 @@ function xmlCheckHeir($xmlfile){
    xmlSave($xml,$xmlfile);
 }
 
+function queryCheckValid($name){
+   if(isset($_GET[$name])){
+      if(strlen($_GET[$name]) > 0){
+         return True;
+      }else{
+         return False;
+      }
+   }else{
+      return False;
+   }
+}
+
 function main(){
    $contents = file_get_contents('SubTask.html');
    
@@ -87,40 +99,38 @@ function main(){
             isset($_GET['todo']) and
             isset($_GET['done']) 
          ){
-         $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));   
-         if(isset($_GET['one'])){
-            if(isset($_GET['two'])){ 
-               $one_length = $xml->sub[0]->count()-1;
-               for($i=0;$i<$one_length;$i++){
-                  if($xml->sub[0]->task[$i]->name == $_GET['one']){
-                     $found = $i;
-                  }
+         $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));    
+         if(queryCheckValid('one')){ 
+            $one_length = $xml->sub[0]->count();
+            for($i=0;$i<$one_length;$i++){
+               if($xml->sub[0]->task[$i]->name == $_GET['one']){
+                  $found = $i;
                }
-               if(!isset($xml->sub[0]->task[$found]->sub[0])){
-                  $xml->sub[0]->task[$found]->addChild('sub');
-               }
-               $xml->sub[0]->task[$found]->sub[0]->addChild('task');
-               $last = $xml->sub[0]->task[$found]->sub[0]->count()-1;
-               $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('name');
-               $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('done');
-               $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('todo');
-               $xml->sub[0]->task[$found]->sub[0]->task[$last]->name = $_GET['name'];
-               $xml->sub[0]->task[$found]->sub[0]->task[$last]->done = $_GET['done'];
-               $xml->sub[0]->task[$found]->sub[0]->task[$last]->todo = $_GET['todo']; 
-            }else{ 
-               if(!isset($xml->sub[0])){
-                  $xml->addChild('sub');
-               } 
-               $xml->sub[0]->addChild('task');
-               $last = $xml->sub[0]->count()-1;
-               $xml->sub[0]->task[$last]->addChild('name');
-               $xml->sub[0]->task[$last]->addChild('done');
-               $xml->sub[0]->task[$last]->addChild('todo');
-               $xml->sub[0]->task[$last]->name = $_GET['name'];
-               $xml->sub[0]->task[$last]->done = $_GET['done'];
-               $xml->sub[0]->task[$last]->todo = $_GET['todo'];
             }
-         }
+            if(!isset($xml->sub[0]->task[$found]->sub[0])){
+               $xml->sub[0]->task[$found]->addChild('sub');
+            }
+            $xml->sub[0]->task[$found]->sub[0]->addChild('task');
+            $last = $xml->sub[0]->task[$found]->sub[0]->count()-1;
+            $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('name');
+            $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('done');
+            $xml->sub[0]->task[$found]->sub[0]->task[$last]->addChild('todo');
+            $xml->sub[0]->task[$found]->sub[0]->task[$last]->name = $_GET['name'];
+            $xml->sub[0]->task[$found]->sub[0]->task[$last]->done = $_GET['done'];
+            $xml->sub[0]->task[$found]->sub[0]->task[$last]->todo = $_GET['todo']; 
+         }else{ 
+            if(!isset($xml->sub[0])){
+               $xml->addChild('sub');
+            } 
+            $xml->sub[0]->addChild('task');
+            $last = $xml->sub[0]->count()-1;
+            $xml->sub[0]->task[$last]->addChild('name');
+            $xml->sub[0]->task[$last]->addChild('done');
+            $xml->sub[0]->task[$last]->addChild('todo');
+            $xml->sub[0]->task[$last]->name = $_GET['name'];
+            $xml->sub[0]->task[$last]->done = $_GET['done'];
+            $xml->sub[0]->task[$last]->todo = $_GET['todo'];
+         } 
          xmlSave($xml,$filename);
          header("Location: http://www.ajrobinson.org/SubTask/SubTask.php?id=".$id);
          exit;   
@@ -145,6 +155,8 @@ function main(){
                   <input type="text" name="todo"><br>
                   <label for="new">Done</label><br> 
                   <input type="text" name="done"><br>
+                  <label for="new">Layer One Parent</label><br> 
+                  <input type="text" name="one"><br>
                   <input type="submit" value="Submit">
                </form>
                <form id="add" name="add" method="get" action="">
