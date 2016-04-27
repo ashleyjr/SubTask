@@ -73,7 +73,8 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
         .attr("id",function(d,i){return element_id+i;})
         .style("fill", function(d) { return color_function(d);})
         .attr("class","form");
-    slices.on("click",animate);
+    slices.on("click",update_boxes);
+    slices.on("dblclick",animate);
 
     //if (title_function != undefined)
     //{
@@ -149,7 +150,17 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
             }
         }
     }
-    
+   
+
+ 
+    function update_boxes(d) {
+       
+         var textbox = document.getElementsByName('name')[0]
+         textbox.value = String(d[2]);
+       
+      }
+
+
     var animating = false;
     
     function animate(d) {
@@ -158,7 +169,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
         {
             return;
         }
-         
+      
          var select = d3.select("#"+element_id+"_select") 
          select.html(String(d[2]) + "<br>" + String(d[4]));
         
