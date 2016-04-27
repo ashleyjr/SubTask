@@ -155,10 +155,24 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
  
     function update_boxes(d) {
        
-         var textbox = document.getElementsByName('name')[0]
+         var textbox = document.getElementsByName('one')[0]
          textbox.value = String(d[2]);
-       
-      }
+      
+         var done_todo = String(d[4]).split(",");
+         if(done_todo[1] > done_todo[0]){
+            var todo = done_todo[1];
+            var done = done_todo[0];
+         }else{
+            var todo = done_todo[0];
+            var done = done_todo[1];
+         }
+
+         var textbox = document.getElementsByName('done')[0]
+         textbox.value = done;
+      
+         var textbox = document.getElementsByName('todo')[0]
+         textbox.value = todo;
+   }
 
 
     var animating = false;

@@ -160,7 +160,7 @@ function main(){
                         <td><input type="text" name="name"></td>
                      </tr>
                      <tr>
-                        <d><label for="todo">Todo</label></td>
+                        <td><label for="todo">Todo</label></td>
                         <td><input type="text" name="todo"></td>
                      </tr>
                      <tr>
