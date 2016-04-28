@@ -58,17 +58,20 @@ function xmlCheckHeir($xmlfile){
       for($i=0;$i<$one;$i++){
          $one_todo += $xml->sub[0]->task[$i]->todo;
          $one_done += $xml->sub[0]->task[$i]->done;
-         if(isset($xml->sub[0]->task[$i]->sub[0])){
-            $two = $xml->sub[0]->task[$i]->sub[0]->count();
-            $two_todo = 0;
-            $two_done = 0;
-            for($j=0;$j<$two;$j++){
-               $two_todo += $xml->sub[0]->task[$i]->sub[0]->task[$j]->todo; 
-               $two_done += $xml->sub[0]->task[$i]->sub[0]->task[$j]->done; 
-            }
-            $xml->sub[0]->task[$i]->todo = $two_todo;
-            $xml->sub[0]->task[$i]->done = $two_done;
-         }
+         //if(isset($xml->sub[0]->task[$i]->sub[0])){
+         //   $two = $xml->sub[0]->task[$i]->sub[0]->count();
+         //   $two_todo = 0;
+         //   $two_done = 0;
+         //   for($j=0;$j<$two;$j++){
+         //      $two_todo += $xml->sub[0]->task[$i]->sub[0]->task[$j]->todo; 
+         //      $two_done += $xml->sub[0]->task[$i]->sub[0]->task[$j]->done; 
+         //      if(isset($xml->sub[0]->task[$i]->sub[0]>task[$j]->sub[0])){
+         //         $leaf = False;
+         //      }else{
+         //   }
+         //   $xml->sub[0]->task[$i]->todo = $two_todo;
+         //   $xml->sub[0]->task[$i]->done = $two_done;
+         //}
       }
       $xml->todo = $one_done;
       $xml->done = $one_todo;
