@@ -161,11 +161,11 @@ function main(){
                      </tr>
                      <tr>
                         <td><label for="todo">Todo</label></td>
-                        <td><input type="text" name="todo"></td>
+                        <td><input type="range" min="0" max="50" value="25" name="todo"/></td>
                      </tr>
                      <tr>
                         <td><label for="done">Done</label></td>
-                        <td><input type="text" name="done"></td>
+                        <td><input type="range" min="0" max="50" value="25" name="done"/></td>
                      </tr>
                      <tr>
                         <td><label for="one">One</label></td>
