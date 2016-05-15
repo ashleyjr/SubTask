@@ -156,7 +156,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
     function update_boxes(d) {
 
          if(d[3] == 1){
-            var textbox = document.getElementsByName('one')[0]
+            var textbox = document.getElementsByName('name')[0]
             textbox.value = String(d[2]);
          }
          if(d[3] == 2){
