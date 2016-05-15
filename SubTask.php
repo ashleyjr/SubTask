@@ -177,12 +177,12 @@ function main(){
                      <tr>
                         <td><label for="todo">Todo</label></td>
                         <td><input id="todo" type="range" min="0" max="100" value="50" name="todo" onChange="todo_label.textContent = todo.value"/></td>
-                        <td><label id="todo_label" type="text">50</label></td>
+                        <td><label id="todo_label" name="todo_label" type="text">50</label></td>
                      </tr>
                      <tr>
                         <td><label for="done">Done</label></td>
                         <td><input id="done" type="range" min="0" max="100" value="25" name="done" onChange="done_label.textContent = done.value"/></td>
-                        <td><label id="done_label" type="text">25</label></td> 
+                        <td><label id="done_label" name="done_label" type="text">25</label></td> 
                      </tr>
                      <tr>
                         <td><label for="one">One</label></td>

@@ -157,7 +157,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
 
          if(d[3] == 1){
             var textbox = document.getElementsByName('name')[0]
-            textbox.value = String(d[2]);
+            textbox.value = String(d[2]); 
          }
          if(d[3] == 2){
             var textbox = document.getElementsByName('two')[0]
@@ -174,11 +174,17 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
             var done = done_todo[1];
          }
 
-         var textbox = document.getElementsByName('done')[0]
-         textbox.value = done;
-      
-         var textbox = document.getElementsByName('todo')[0]
-         textbox.value = todo;
+         var done_slide = document.getElementsByName('done')[0]
+         var done_label = document.getElementsByName('done_label')[0]
+
+         done_slide.value = done;
+         done_label.innerHTML = done;
+
+         var todo_slide = document.getElementsByName('todo')[0]
+         var todo_label = document.getElementsByName('todo_label')[0]
+
+         todo_slide.value = todo;
+         todo_label.innerHTML = todo;
    }
 
 
