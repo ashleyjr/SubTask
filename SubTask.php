@@ -129,14 +129,29 @@ function main(){
             if(!isset($xml->sub[0])){
                $xml->addChild('sub');
             } 
-            $xml->sub[0]->addChild('task');
-            $last = $xml->sub[0]->count()-1;
-            $xml->sub[0]->task[$last]->addChild('name');
-            $xml->sub[0]->task[$last]->addChild('done');
-            $xml->sub[0]->task[$last]->addChild('todo');
-            $xml->sub[0]->task[$last]->name = $_GET['name'];
-            $xml->sub[0]->task[$last]->done = $_GET['done'];
-            $xml->sub[0]->task[$last]->todo = $_GET['todo'];
+            $new = True;
+            $root_length = $xml->sub[0]->count();
+            for($i=0;$i<$root_length;$i++){
+               if(isset($xml->sub[0]->task[$i]->name)){
+                  if($xml->sub[0]->task[$i]->name == $_GET['name']){
+                     $found = $i;
+                     $new = False;
+                  }
+               }
+            }
+            if($new){
+               $xml->sub[0]->addChild('task');
+               $last = $xml->sub[0]->count()-1;
+               $xml->sub[0]->task[$last]->addChild('name');
+               $xml->sub[0]->task[$last]->addChild('done');
+               $xml->sub[0]->task[$last]->addChild('todo');
+               $xml->sub[0]->task[$last]->name = $_GET['name'];
+               $xml->sub[0]->task[$last]->done = $_GET['done'];
+               $xml->sub[0]->task[$last]->todo = $_GET['todo'];
+            }else{
+               $xml->sub[0]->task[$found]->done = $_GET['done'];
+               $xml->sub[0]->task[$found]->todo = $_GET['todo'];
+            }
          } 
          xmlSave($xml,$filename);
          header("Location: http://www.ajrobinson.org/SubTask/SubTask.php?id=".rmWhiteSpace($id));
