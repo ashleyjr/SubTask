@@ -154,17 +154,29 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
 
  
     function update_boxes(d) {
-
-         if(d[3] == 1){
+         //window.alert(d[2]);
+         //window.alert(d[3]);
+         
+         var textbox = document.getElementsByName('name')[0]
+         textbox.value = String(""); 
+         var textbox = document.getElementsByName('one')[0]
+         textbox.value = String("");
+         
+         var child = document.getElementById("child").checked
+         
+         if(d[3] == 0){
             var textbox = document.getElementsByName('name')[0]
-            textbox.value = String(d[2]); 
-         }
-         if(d[3] == 2){
-            var textbox = document.getElementsByName('two')[0]
             textbox.value = String(d[2]);
-         }     
-
-
+         }
+         if(d[3] == 1){
+            if(child){
+               var textbox = document.getElementsByName('one')[0]
+               textbox.value = String(d[2]);
+            }else{
+               var textbox = document.getElementsByName('name')[0]
+               textbox.value = String(d[2]);
+            }
+         }
          var done_todo = String(d[4]).split(",");
          if(done_todo[1] > done_todo[0]){
             var todo = done_todo[1];
@@ -191,7 +203,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
     var animating = false;
     
     function animate(d) {
-         window.alert(d);   
+         //window.alert(d);   
         if (animating)
         {
             return;

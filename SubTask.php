@@ -189,12 +189,7 @@ function main(){
                         <td><input type="text" name="one"></td>
                      </tr>
                      <tr>
-                        <td><label for="two">Two</label></td>
-                        <td><input type="text" name="two"></td>
-                     </tr>
-                     <tr>
-                        <td><label for="three">Three</label></td>
-                        <td><input type="text" name="three"></td>
+                        <td><input type="checkbox" id="child" name="child" value="Bike">Child</td>
                      </tr>
                   </table>
                   <input type="submit" value="Submit">
