@@ -313,4 +313,18 @@ function init_plots()
    init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data,count_function,color_function,legend_function);
 }
 
+
+function clamp_box(done,todo)
+{
+   //window.alert(value//)
+   document.getElementById("todo_label").innerHTML = todo;
+   document.getElementById("todo").value = todo;
+   if(done > todo){
+      document.getElementById("done_label").innerHTML = todo;
+      document.getElementById("done").value = todo;
+   }else{
+      document.getElementById("done_label").innerHTML = done;
+      document.getElementById("done").value = done;
+   }
+}
  
