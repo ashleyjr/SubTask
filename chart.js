@@ -157,46 +157,48 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
          //window.alert(d[2]);
          //window.alert(d[3]);
          
-         var textbox = document.getElementsByName('name')[0]
-         textbox.value = String(""); 
-         var textbox = document.getElementsByName('one')[0]
-         textbox.value = String("");
-         
-         var child = document.getElementById("child").checked
-         
-         if(d[3] == 0){
+         if(d[3] != 0){
             var textbox = document.getElementsByName('name')[0]
-            textbox.value = String(d[2]);
-         }
-         if(d[3] == 1){
-            if(child){
-               var textbox = document.getElementsByName('one')[0]
-               textbox.value = String(d[2]);
-            }else{
+            textbox.value = String(""); 
+            var textbox = document.getElementsByName('one')[0]
+            textbox.value = String("");
+            
+            var child = document.getElementById("child").checked
+            
+            if(d[3] == 0){
                var textbox = document.getElementsByName('name')[0]
                textbox.value = String(d[2]);
             }
+            if(d[3] == 1){
+               if(child){
+                  var textbox = document.getElementsByName('one')[0]
+                  textbox.value = String(d[2]);
+               }else{
+                  var textbox = document.getElementsByName('name')[0]
+                  textbox.value = String(d[2]);
+               }
+            }
+            var done_todo = String(d[4]).split(",");
+            if(done_todo[1] > done_todo[0]){
+               var todo = done_todo[1];
+               var done = done_todo[0];
+            }else{
+               var todo = done_todo[0];
+               var done = done_todo[1];
+            }
+
+            var done_slide = document.getElementsByName('done')[0]
+            var done_label = document.getElementsByName('done_label')[0]
+
+            done_slide.value = done;
+            done_label.innerHTML = done;
+
+            var todo_slide = document.getElementsByName('todo')[0]
+            var todo_label = document.getElementsByName('todo_label')[0]
+
+            todo_slide.value = todo;
+            todo_label.innerHTML = todo;
          }
-         var done_todo = String(d[4]).split(",");
-         if(done_todo[1] > done_todo[0]){
-            var todo = done_todo[1];
-            var done = done_todo[0];
-         }else{
-            var todo = done_todo[0];
-            var done = done_todo[1];
-         }
-
-         var done_slide = document.getElementsByName('done')[0]
-         var done_label = document.getElementsByName('done_label')[0]
-
-         done_slide.value = done;
-         done_label.innerHTML = done;
-
-         var todo_slide = document.getElementsByName('todo')[0]
-         var todo_label = document.getElementsByName('todo_label')[0]
-
-         todo_slide.value = todo;
-         todo_label.innerHTML = todo;
    }
 
 
