@@ -113,7 +113,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
     
     function get_stop_angle(d,ref)
     {
-        if (ref)
+       if (ref)
         {
             var ref_span = ref[1]-ref[0];
             return (d[1]-ref[0])/ref_span*Math.PI*2.0
@@ -329,4 +329,15 @@ function clamp_box(done,todo)
       document.getElementById("done").value = done;
    }
 }
- 
+
+function child_switch(){
+   var child = document.getElementById("child").checked;
+   if(child){
+      document.getElementById("one").value = document.getElementById("name").value;
+      document.getElementById("name").value = "";
+   }else{
+      document.getElementById("name").value = document.getElementById("one").value;
+      document.getElementById("one").value = "";
+   }
+}
+

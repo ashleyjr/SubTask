@@ -188,7 +188,7 @@ function main(){
                   <table>
                      <tr>
                         <td><label for="new">Name</label></td>
-                        <td><input type="text" name="name"></td>
+                        <td><input type="text" id="name" name="name"></td>
                      </tr>
                      <tr>
                         <td><label for="todo">Todo</label></td>
@@ -202,10 +202,10 @@ function main(){
                      </tr>
                      <tr>
                         <td><label for="one">One</label></td>
-                        <td><input type="text" name="one"></td>
+                        <td><input type="text" id="one" name="one"></td>
                      </tr>
                      <tr>
-                        <td><input type="checkbox" id="child" name="child" value="Bike">Child</td>
+                        <td><input type="checkbox" id="child" onChange ="child_switch();" name="child" value="Bike">Child</td>
                      </tr>
                   </table>
                   <input type="submit" value="Submit">
