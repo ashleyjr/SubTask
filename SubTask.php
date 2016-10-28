@@ -51,8 +51,7 @@ function xmlCreateIfNone($name){
 
 function xmlCheckHeir($xmlfile){
    $xml = new SimpleXMLElement(stripslashes(file_get_contents($xmlfile)));     
-    
-   if(isset($xml->sub[0])){
+   if(isset($xml->sub[0])){                                                            // Make the heirarchy sum up
       $one = $xml->sub[0]->count();
       $one_todo = 0;
       $one_done = 0;
@@ -69,12 +68,31 @@ function xmlCheckHeir($xmlfile){
             $xml->sub[0]->task[$i]->done = $two_done;
          }
          $one_todo += $xml->sub[0]->task[$i]->todo;
-         $one_done += $xml->sub[0]->task[$i]->done; 
+         $one_done += $xml->sub[0]->task[$i]->done;  
       }
       $xml->todo = $one_todo;
-      $xml->done = $one_done;
+      $xml->done = $one_done;       
+   }    
+   xmlSave($xml,$xmlfile);                                                             // Maintain only the unswapped file 
+   if(isset($xml->sub[0])){                                                            // Swap all but the lead cells
+      $one = $xml->sub[0]->count();
+      for($i=0;$i<$one;$i++){
+         $one_not_leaf = False;
+         if(isset($xml->sub[0]->task[$i]->sub[0])){
+            $one_not_leaf = True; 
+         }
+         if($one_not_leaf){                                                            // Switch if not a leaf
+            $switch = (int)$xml->sub[0]->task[$i]->todo;                         
+            $xml->sub[0]->task[$i]->todo = (int)$xml->sub[0]->task[$i]->todo;
+            $xml->sub[0]->task[$i]->done = $switch;        
+         }
+      }
+      $switch = (int)$xml->todo;                                                       // Always switch the core
+      $xml->todo = (int)$xml->done;
+      $xml->done = $switch;       
+      
    }   
-   xmlSave($xml,$xmlfile);
+   xmlSave($xml,"display.xml");                                                        // This will be the displayed xml file
 }
 
 function queryCheckValid($name){
@@ -155,7 +173,7 @@ function main(){
    
       xmlCheckHeir($filename);            # Make sure the hierarchy adds up in the xml
    
-      xml2js(rmWhiteSpace($id),$filename,'data.js');        # convert the xml file to js array
+      xml2js(rmWhiteSpace($id),"display.xml",'data.js');        # convert the xml file to js array
 
       $xml = new SimpleXMLElement(stripslashes(file_get_contents($filename)));    
       $title = $xml->name;
